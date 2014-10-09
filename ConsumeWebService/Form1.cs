@@ -54,7 +54,6 @@ namespace ConsumeWebService
                     switch (i + 1)
                     {
                         case 6:
-
                             if (v == 0)
                                 li.BackColor = Color.White;
                             else
