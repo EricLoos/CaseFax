@@ -57,7 +57,7 @@
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(13, 13);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(549, 321);
+            this.listView1.Size = new System.Drawing.Size(286, 253);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -138,7 +138,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 342);
+            this.label1.Location = new System.Drawing.Point(12, 274);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 1;
@@ -148,7 +148,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 364);
+            this.ClientSize = new System.Drawing.Size(311, 296);
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);

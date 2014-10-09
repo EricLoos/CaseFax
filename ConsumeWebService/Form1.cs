@@ -48,11 +48,14 @@ namespace ConsumeWebService
                 {
                     ListViewItem li = listView1.Items[i];
                     li.SubItems[2].Text = items[i];
+                    int v = -1, v0;
+                    if (int.TryParse(items[i], out v0))
+                        v = v0;
                     switch (i + 1)
                     {
                         case 6:
 
-                            if (items[i] == "0")
+                            if (v == 0)
                                 li.BackColor = Color.White;
                             else
                             {
@@ -61,7 +64,7 @@ namespace ConsumeWebService
                             }
                             break;
                         case 7:
-                            if (items[i] == "0")
+                            if (v == 0)
                             {
                                 li.BackColor = Color.White;
                                 li.ForeColor = Color.Black;
@@ -74,7 +77,7 @@ namespace ConsumeWebService
                             break;
                         case 10:
                         case 11:
-                            if (items[i] == "0")
+                            if (v == 0)
                             {
                                 li.BackColor = Color.White;
                                 li.ForeColor = Color.Black;
