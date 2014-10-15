@@ -26,14 +26,20 @@ namespace ConsumeWebService
             InitializeComponent();
         }
         ServiceReference1.GetAlertsSoapClient sr = new ServiceReference1.GetAlertsSoapClient();
+        Color OriginalDefaultBackColor = Form1.DefaultBackColor, OriginalDefaultForeColor = Form1.DefaultForeColor;
         private void Form1_Load(object sender, EventArgs e)
         {
+            OriginalDefaultBackColor = Form1.DefaultBackColor;
+            OriginalDefaultForeColor = Form1.DefaultForeColor;
             LastBalanced = DateTime.Now;
             GetAlerts();
         }
         public DateTime LastBalanced = DateTime.Now;
         public void GetAlerts()
         {
+            this.BackColor = OriginalDefaultBackColor;
+            this.ForeColor = OriginalDefaultForeColor;
+            bool Red = false, Yellow = false;
             Cursor = Cursors.WaitCursor;
             string s = sr.GetCounts("CaseFaxAlertsPa55word77!");
             s += ",00:00";
@@ -60,6 +66,7 @@ namespace ConsumeWebService
                             {
                                 li.BackColor = Color.Yellow;
                                 //li.ForeColor = Color.White;
+                                Yellow = true;
                             }
                             break;
                         case 7:
@@ -72,6 +79,7 @@ namespace ConsumeWebService
                             {
                                 li.BackColor = Color.Red;
                                 li.ForeColor = Color.White;
+                                Red = true;
                             }
                             break;
                         case 10:
@@ -85,6 +93,7 @@ namespace ConsumeWebService
                             {
                                 li.BackColor = Color.Red;
                                 li.ForeColor = Color.White;
+                                Red = true;
                             }
                             break;
                         case 12:
@@ -106,13 +115,29 @@ namespace ConsumeWebService
                                 }
                             } */
                             if (MinutesOut > 10)
+                            {
                                 li.BackColor = Color.Yellow;
+                                Yellow = true;
+                            }
                             if (MinutesOut > 20)
                             {
                                 li.BackColor = Color.Red;
                                 li.ForeColor = Color.White;
+                                Red = true;
                             }
                             break;
+                    }
+                }
+                if (Red)
+                {
+                    this.BackColor = Color.Red;
+                    this.ForeColor = Color.White;
+                }
+                else
+                {
+                    if (Yellow)
+                    {
+                        this.BackColor = Color.Yellow;
                     }
                 }
             }
