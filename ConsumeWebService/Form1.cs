@@ -9,6 +9,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 
+
+/*
+ TODO: Monitor last cycle for eFax TRANS. Has it stopped running?
+ TODO: Monitor last cycle of ReservationServer. Has it stopped running?
+ * Check the log for an entry in the last 10 minutes.
+ */
 namespace ConsumeWebService
 {
     public partial class Form1 : Form
