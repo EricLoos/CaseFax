@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace ConsumeWebService
 {
@@ -29,10 +30,24 @@ namespace ConsumeWebService
         Color OriginalDefaultBackColor = Form1.DefaultBackColor, OriginalDefaultForeColor = Form1.DefaultForeColor;
         private void Form1_Load(object sender, EventArgs e)
         {
+            string[] ports = SerialPort.GetPortNames();
+            foreach (string rw in ports)
+            {
+                //comPortsToolStripMenuItem.Items.Add()
+                ToolStripMenuItem SSSMenu = new ToolStripMenuItem(rw,null,ChildClick);
+                contextMenuStrip1.Items.Add(SSSMenu);
+            }
             OriginalDefaultBackColor = Form1.DefaultBackColor;
             OriginalDefaultForeColor = Form1.DefaultForeColor;
             LastBalanced = DateTime.Now;
             GetAlerts();
+        }
+        public void ChildClick(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem)
+            {
+
+            }
         }
         public DateTime LastBalanced = DateTime.Now;
         public void GetAlerts()
