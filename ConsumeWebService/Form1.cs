@@ -46,7 +46,10 @@ namespace ConsumeWebService
         {
             if (sender is ToolStripMenuItem)
             {
-
+                string s = (sender as ToolStripMenuItem).Text;
+                serialPort1.Close();
+                serialPort1.PortName = s;
+                serialPort1.Open();
             }
         }
         public DateTime LastBalanced = DateTime.Now;
@@ -147,12 +150,23 @@ namespace ConsumeWebService
                 {
                     this.BackColor = Color.Red;
                     this.ForeColor = Color.White;
+                    if (serialPort1.IsOpen)
+                    {
+                        serialPort1.WriteLine("R");
+                    }
                 }
                 else
                 {
                     if (Yellow)
                     {
                         this.BackColor = Color.Yellow;
+                        if (serialPort1.IsOpen)
+                            serialPort1.WriteLine("Y");
+                    }
+                    else
+                    {
+                        if (serialPort1.IsOpen)
+                            serialPort1.WriteLine("G");
                     }
                 }
             }
