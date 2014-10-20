@@ -56,6 +56,7 @@ namespace ConsumeWebService
                 serialPort1.Close();
                 serialPort1.PortName = s;
                 serialPort1.Open();
+                (sender as ToolStripMenuItem).Checked = true;
             }
         }
         public DateTime LastBalanced = DateTime.Now;
