@@ -229,6 +229,7 @@ namespace ConsumeWebService
                         minutes = 0; 
                         GetAlerts();
                         //AlertCount++;
+                        ClearSelected();
                     }
                 }
             }
@@ -254,6 +255,10 @@ namespace ConsumeWebService
             toolStripMenuItem2.Checked = false;
             toolStripMenuItem3.Checked = false;
             toolStripMenuItem4.Checked = false;
+        }
+        private void ClearSelected()
+        {
+            listView1.SelectedItems.Clear();
         }
     }
 }
