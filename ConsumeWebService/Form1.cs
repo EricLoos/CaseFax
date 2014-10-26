@@ -69,6 +69,11 @@ namespace ConsumeWebService
             string s = sr.GetCounts("CaseFaxAlertsPa55word77!");
             s += ",00:00";
             string[] items = s.Split(',');
+            if (items.Length != titles.Length)
+            {
+                s = "0,0,0," + s;
+                items = s.Split(',');
+            }
             if (items[0] == items[1])
             {
                 LastBalanced = DateTime.Now;
@@ -217,6 +222,9 @@ namespace ConsumeWebService
         public int MaxAlertMinutes = 1;
         private void timer1_Tick(object sender, EventArgs e)
         {
+            DateTime n = DateTime.Now;
+            if (n.Hour <= 20 && n.Hour >= 6)
+            {
             if (tsnOnTimer.Checked)
             {
                 seconds++;
@@ -232,6 +240,7 @@ namespace ConsumeWebService
                         ClearSelected();
                     }
                 }
+            }
             }
             label1.Text = string.Format("{0} -- {1:00}:{2:00}", AlertCount, minutes, seconds);
         }
