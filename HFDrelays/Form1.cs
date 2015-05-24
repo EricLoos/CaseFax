@@ -64,7 +64,7 @@ namespace HFDrelays
         }
         public string AddString(string s, string v)
         {
-            string r=s;
+            string r = s;
             if (r.Trim() == string.Empty)
                 r = v;
             else
@@ -79,18 +79,18 @@ namespace HFDrelays
             foreach (string s in SerialPort.GetPortNames())
             {
                 cbPorts.Items.Add(s);
-            }  
+            }
         }
 
         private void RefreshStatus()
         {
-            label2.Text = "";
+            label2.Text = string.Format("{0:00}:{1:00} of {2:00}:00", TimerMinutes, TimerSeconds, MaxMinutes); ;
         }
 
         private void cbPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
             serialPort1.Close();
-            try 
+            try
             {
                 if (cbPorts.SelectedItem is string)
                 {
@@ -99,9 +99,38 @@ namespace HFDrelays
                     MessageBox.Show("Serial port has been opened successfully.");
                 }
             }
-            catch(Exception ee)
+            catch (Exception ee)
             {
                 MessageBox.Show(ee.Message);
+            }
+        }
+        int MaxMinutes = 10;
+        int TimerMinutes = 0;
+        int TimerSeconds = 0;
+        int TimerCount = 0;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+
+            try
+            {
+                TimerSeconds++;
+                if (TimerSeconds >= 60)
+                {
+                    TimerSeconds = 0;
+                    TimerMinutes++;
+                    if (TimerMinutes >= MaxMinutes)
+                    {
+                        TimerMinutes = 0;
+                        TimerCount++;
+                        AlertRefresh();
+                    }
+                }
+                RefreshStatus();
+            }
+            finally
+            {
+                timer1.Enabled = true;
             }
         }
     }
