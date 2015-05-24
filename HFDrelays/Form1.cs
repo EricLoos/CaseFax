@@ -17,9 +17,10 @@ namespace HFDrelays
         {
             InitializeComponent();
         }
-
+        bool testing = false;
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            testing = false;
             AlertRefresh();
         }
         int bits = 2, lastBits = 7;
@@ -30,8 +31,11 @@ namespace HFDrelays
             try
             {
                 DateTime start = DateTime.Now;
-                ServiceReference1.GetAlertsSoapClient ws = new ServiceReference1.GetAlertsSoapClient();
-                bits = ws.GetReplicationHFDbits("rvjrvj");
+                if (!testing)
+                {
+                    ServiceReference1.GetAlertsSoapClient ws = new ServiceReference1.GetAlertsSoapClient();
+                    bits = ws.GetReplicationHFDbits("rvjrvj");
+                }
                 // GYR
                 string s = string.Empty;
                 string ss = string.Empty;
@@ -131,6 +135,7 @@ namespace HFDrelays
                     {
                         TimerMinutes = 0;
                         TimerCount++;
+                        testing = false;
                         AlertRefresh();
                     }
                 }
@@ -169,6 +174,30 @@ namespace HFDrelays
 
         private void Form1_Resize(object sender, EventArgs e)
         {
+            this.Invalidate();
+        }
+
+        private void redToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            testing = true;
+            bits = 1;
+            AlertRefresh();
+            this.Invalidate();
+        }
+
+        private void yellowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            testing = true;
+            bits = 2;
+            AlertRefresh();
+            this.Invalidate();
+        }
+
+        private void greenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            testing = true;
+            bits = 4;
+            AlertRefresh();
             this.Invalidate();
         }
     }
