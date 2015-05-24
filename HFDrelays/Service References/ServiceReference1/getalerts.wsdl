@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCounts">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCountsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCountsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetReplicationHFD">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetReplicationHFDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetReplicationHFDResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetReplicationHFDbits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetReplicationHFDbitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetReplicationHFDbitsResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCountsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCounts" />
+  </wsdl:message>
+  <wsdl:message name="GetCountsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCountsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetReplicationHFDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetReplicationHFD" />
+  </wsdl:message>
+  <wsdl:message name="GetReplicationHFDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReplicationHFDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetReplicationHFDbitsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetReplicationHFDbits" />
+  </wsdl:message>
+  <wsdl:message name="GetReplicationHFDbitsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReplicationHFDbitsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="GetAlertsSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCounts">
+      <wsdl:input message="tns:GetCountsSoapIn" />
+      <wsdl:output message="tns:GetCountsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReplicationHFD">
+      <wsdl:input message="tns:GetReplicationHFDSoapIn" />
+      <wsdl:output message="tns:GetReplicationHFDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReplicationHFDbits">
+      <wsdl:input message="tns:GetReplicationHFDbitsSoapIn" />
+      <wsdl:output message="tns:GetReplicationHFDbitsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetAlertsSoap" type="tns:GetAlertsSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCounts">
+      <soap:operation soapAction="http://tempuri.org/GetCounts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReplicationHFD">
+      <soap:operation soapAction="http://tempuri.org/GetReplicationHFD" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReplicationHFDbits">
+      <soap:operation soapAction="http://tempuri.org/GetReplicationHFDbits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="GetAlertsSoap12" type="tns:GetAlertsSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCounts">
+      <soap12:operation soapAction="http://tempuri.org/GetCounts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReplicationHFD">
+      <soap12:operation soapAction="http://tempuri.org/GetReplicationHFD" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReplicationHFDbits">
+      <soap12:operation soapAction="http://tempuri.org/GetReplicationHFDbits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetAlerts">
+    <wsdl:port name="GetAlertsSoap" binding="tns:GetAlertsSoap">
+      <soap:address location="http://caweb.classact.us/casefaxalerts/getalerts.asmx" />
+    </wsdl:port>
+    <wsdl:port name="GetAlertsSoap12" binding="tns:GetAlertsSoap12">
+      <soap12:address location="http://caweb.classact.us/casefaxalerts/getalerts.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
