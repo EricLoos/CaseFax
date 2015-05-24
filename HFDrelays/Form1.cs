@@ -22,14 +22,16 @@ namespace HFDrelays
         {
             AlertRefresh();
         }
+        int bits = 2, lastBits = 7;
         private void AlertRefresh()
         {
+            fillRed = false; fillGreen = false; fillYellow = false;
             Cursor = Cursors.WaitCursor; btnRefresh.Enabled = false;
             try
             {
                 DateTime start = DateTime.Now;
                 ServiceReference1.GetAlertsSoapClient ws = new ServiceReference1.GetAlertsSoapClient();
-                int bits = ws.GetReplicationHFDbits("rvjrvj");
+                bits = ws.GetReplicationHFDbits("rvjrvj");
                 // GYR
                 string s = string.Empty;
                 string ss = string.Empty;
@@ -37,16 +39,19 @@ namespace HFDrelays
                 {
                     s += AddString(s, "Red");
                     ss += "R";
+                    fillRed = true;
                 }
                 if ((bits & 2) != 0)
                 {
                     s += AddString(s, "Yellow");
                     ss += "Y";
+                    fillYellow = true;
                 }
                 if ((bits & 4) != 0)
                 {
                     s += AddString(s, "Green");
                     ss += "G";
+                    fillGreen = true;
                 }
                 s = s.Trim();
                 if (s == string.Empty)
@@ -55,6 +60,9 @@ namespace HFDrelays
                 label1.Text = s;
                 if (serialPort1.IsOpen)
                     serialPort1.WriteLine(ss);
+                if (bits != lastBits)
+                    this.Invalidate();
+                lastBits = bits;
             }
             finally
             {
@@ -133,13 +141,35 @@ namespace HFDrelays
                 timer1.Enabled = true;
             }
         }
-
+        bool fillRed = false;
+        bool fillGreen = true;
+        bool fillYellow = true;
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            int y1 = cbPorts.Top + cbPorts.Height;
-            int y2 = y1 + (Size.Height - y1) / 2;
+            int y1 = cbPorts.Top; // +cbPorts.Height;
+            int y2 = y1 + (this.ClientRectangle.Height - y1) / 2;
             int wid = (int)(y2 * 0.5);
-            e.Graphics.DrawEllipse(Pens.Black, y1, y2, wid, wid);
+            int x2 = (int)(wid * 1.1);
+            x2 = label3.Left;
+
+            Color c = Color.Green;
+            if (fillGreen)
+            { c = Color.LightGreen; }
+            if (fillRed)
+            { c = Color.Red; }
+            if (fillYellow)
+            { c = Color.Yellow; }
+            using (Brush b = new SolidBrush(c))
+            {
+                e.Graphics.FillEllipse(b, x2, y2, wid, wid);
+            }
+
+            e.Graphics.DrawEllipse(Pens.Black, x2, y2, wid, wid);
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            this.Invalidate();
         }
     }
 }
