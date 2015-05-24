@@ -24,32 +24,43 @@ namespace HFDrelays
         }
         private void AlertRefresh()
         {
-            DateTime start = DateTime.Now;
-            ServiceReference1.GetAlertsSoapClient ws = new ServiceReference1.GetAlertsSoapClient();
-            int bits = ws.GetReplicationHFDbits("rvjrvj");
-            // GYR
-            string s = string.Empty;
-            string ss = string.Empty;
-            if ((bits & 1) != 0)
+            Cursor = Cursors.WaitCursor; btnRefresh.Enabled = false;
+            try
             {
-                s += AddString(s, "Red");
-                ss += "R";
+                DateTime start = DateTime.Now;
+                ServiceReference1.GetAlertsSoapClient ws = new ServiceReference1.GetAlertsSoapClient();
+                int bits = ws.GetReplicationHFDbits("rvjrvj");
+                // GYR
+                string s = string.Empty;
+                string ss = string.Empty;
+                if ((bits & 1) != 0)
+                {
+                    s += AddString(s, "Red");
+                    ss += "R";
+                }
+                if ((bits & 2) != 0)
+                {
+                    s += AddString(s, "Yellow");
+                    ss += "Y";
+                }
+                if ((bits & 4) != 0)
+                {
+                    s += AddString(s, "Green");
+                    ss += "G";
+                }
+                s = s.Trim();
+                if (s == string.Empty)
+                    s = "No alerts.";
+                s += string.Format("   {0:0.0} ms", (DateTime.Now - start).TotalMilliseconds);
+                label1.Text = s;
+                if (serialPort1.IsOpen)
+                    serialPort1.WriteLine(ss);
             }
-            if ((bits & 2) != 0)
+            finally
             {
-                s += AddString(s, "Yellow");
-                ss += "Y";
+                Cursor = Cursors.Default;
+                btnRefresh.Enabled = true;
             }
-            if ((bits & 4) != 0)
-            {
-                s += AddString(s, "Green");
-                ss += "G";
-            }
-            s = s.Trim();
-            if (s == string.Empty)
-                s = "No alerts.";
-            s += string.Format("   {0:0.0} ms", (DateTime.Now - start).TotalMilliseconds);
-            label1.Text = s;
         }
         public string AddString(string s, string v)
         {
