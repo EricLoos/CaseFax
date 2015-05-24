@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace HFDrelays
 {
@@ -63,11 +64,34 @@ namespace HFDrelays
         {
             label1.Text = "";
             RefreshStatus();
+            cbPorts.Items.Clear();
+            foreach (string s in SerialPort.GetPortNames())
+            {
+                cbPorts.Items.Add(s);
+            }  
         }
 
         private void RefreshStatus()
         {
             label2.Text = "";
+        }
+
+        private void cbPorts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            serialPort1.Close();
+            try 
+            {
+                if (cbPorts.SelectedItem is string)
+                {
+                    serialPort1.PortName = (string)cbPorts.SelectedItem;
+                    serialPort1.Open();
+                    MessageBox.Show("Serial port has been opened successfully.");
+                }
+            }
+            catch(Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+            }
         }
     }
 }
