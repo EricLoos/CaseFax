@@ -133,5 +133,13 @@ namespace HFDrelays
                 timer1.Enabled = true;
             }
         }
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            int y1 = cbPorts.Top + cbPorts.Height;
+            int y2 = y1 + (Size.Height - y1) / 2;
+            int wid = (int)(y2 * 0.5);
+            e.Graphics.DrawEllipse(Pens.Black, y1, y2, wid, wid);
+        }
     }
 }
