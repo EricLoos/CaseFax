@@ -68,6 +68,10 @@ namespace HFDrelays
                     this.Invalidate();
                 lastBits = bits;
             }
+            catch(Exception ex)
+            {
+                label4.Text = ex.Message;
+            }
             finally
             {
                 Cursor = Cursors.Default;
@@ -92,6 +96,7 @@ namespace HFDrelays
             {
                 cbPorts.Items.Add(s);
             }
+            label4.Text = "";
         }
 
         private void RefreshStatus()
@@ -159,7 +164,7 @@ namespace HFDrelays
 
             Color c = Color.Green;
             if (fillGreen)
-            { c = Color.LightGreen; }
+            { c = Color.Green; }
             if (fillRed)
             { c = Color.Red; }
             if (fillYellow)
