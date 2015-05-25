@@ -21,6 +21,7 @@ namespace HFDrelays
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             testing = false;
+            label4.Text = "";
             AlertRefresh();
         }
         int bits = 2, lastBits = 7;
@@ -96,7 +97,7 @@ namespace HFDrelays
             {
                 cbPorts.Items.Add(s);
             }
-            label4.Text = "";
+            label4.Text = "This is the area for error messages during processing.";
         }
 
         private void RefreshStatus()
