@@ -114,7 +114,9 @@ namespace HFDrelays
                 {
                     serialPort1.PortName = (string)cbPorts.SelectedItem;
                     serialPort1.Open();
+                    
                     MessageBox.Show("Serial port has been opened successfully.");
+                    SendTime();
                 }
             }
             catch (Exception ee)
@@ -143,6 +145,8 @@ namespace HFDrelays
                         TimerCount++;
                         testing = false;
                         AlertRefresh();
+                        if (TimerCount % 6 == 0)
+                            SendTime();
                     }
                 }
                 RefreshStatus();
@@ -205,6 +209,12 @@ namespace HFDrelays
             bits = 4;
             AlertRefresh();
             this.Invalidate();
+        }
+        private void SendTime()
+        {
+            string s = string.Format("{0:yyMMddHHmmss}", DateTime.Now);
+            if (serialPort1.IsOpen)
+                serialPort1.WriteLine(s);
         }
     }
 }
