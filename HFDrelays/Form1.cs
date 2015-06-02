@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
+//using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//Cusing System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
 
@@ -34,7 +34,9 @@ namespace HFDrelays
                 DateTime start = DateTime.Now;
                 if (!testing)
                 {
-                    ServiceReference1.GetAlertsSoapClient ws = new ServiceReference1.GetAlertsSoapClient();
+                    //us.classact.caweb.GetAlertsSoapClient ws = new us.classact.caweb.GetAlertsSoapClient();
+                    ServiceReference1.GetAlerts ws = new ServiceReference1.GetAlerts();
+                    //ServiceReference1.GetAlertsSoapClient ws = new ServiceReference1.GetAlertsSoapClient();
                     bits = ws.GetReplicationHFDbits("rvjrvj");
                 }
                 // GYR
