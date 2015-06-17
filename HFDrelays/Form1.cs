@@ -95,13 +95,25 @@ namespace HFDrelays
             label1.Text = "";
             RefreshStatus();
             cbPorts.Items.Clear();
+            string portName;
             foreach (string s in SerialPort.GetPortNames())
             {
-                cbPorts.Items.Add(s);
+                portName = fixPortName(s);
+                cbPorts.Items.Add(portName);
             }
             label4.Text = "This is the area for error messages during processing.";
         }
-
+        public string fixPortName(string s)
+        {
+            string ss = s.Trim();
+            string r = string.Empty; // = s.Trim();
+            foreach (char ch in ss)
+            {
+                if (ch >= ' ' && ch <= 127)
+                    r += ch;
+            }
+            return r;
+        }
         private void RefreshStatus()
         {
             label2.Text = string.Format("{0:00}:{1:00} of {2:00}:00", TimerMinutes, TimerSeconds, MaxMinutes); ;
