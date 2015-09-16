@@ -102,6 +102,7 @@ namespace HFDrelays
                 cbPorts.Items.Add(portName);
             }
             label4.Text = "This is the area for error messages during processing.";
+            TimerHours = 0;
         }
         public string fixPortName(string s)
         {
@@ -142,6 +143,7 @@ namespace HFDrelays
         int TimerMinutes = 0;
         int TimerSeconds = 0;
         int TimerCount = 0;
+        int TimerHours = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
             timer1.Enabled = false;
@@ -159,8 +161,12 @@ namespace HFDrelays
                         TimerCount++;
                         testing = false;
                         AlertRefresh();
-                        if (TimerCount % 6 == 0)
-                            SendTime();
+                        if (TimerCount % 6 == 0) // Hour
+                        {
+                            if (TimerHours % 4 == 0)
+                                SendTime();
+                            TimerHours++;
+                        }
                     }
                 }
                 RefreshStatus();
