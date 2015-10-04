@@ -291,7 +291,7 @@ namespace HFDrelays
         {
             btnTemp.Enabled = false;
             float temperatureF = getKtempF();
-            label5.Text = string.Format("{0:0.0} F", temperatureF);
+            label5.Text = string.Format("{0:0.00}{1}F", temperatureF,(char)176);
             btnTemp.Enabled = true;
         }
 
@@ -304,11 +304,12 @@ namespace HFDrelays
             this.Invalidate();
         }
         private string temp = '"' + "temp" + '"'+':';
+        // http://stackoverflow.com/questions/4015324/http-request-with-post
         private float getKtempF()
         {
             float f = 0;
             var request = (HttpWebRequest)WebRequest.Create("http://api.openweathermap.org/data/2.5/weather?zip=93306,us");
-
+            // http://api.openweathermap.org/data/2.5/weather?zip=93306,us
             var postData = "zip=93305,us";
             //postData += "&thing2=world";
             postData = "";
