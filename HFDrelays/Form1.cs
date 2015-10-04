@@ -25,9 +25,10 @@ namespace HFDrelays
             AlertRefresh();
         }
         int bits = 2, lastBits = 7;
+        DateTime LastAlertTime = DateTime.MinValue;
         private void AlertRefresh()
         {
-            fillRed = false; fillGreen = false; fillYellow = false;
+            fillRed = false; fillGreen = false; fillYellow = false; fillBlue = false;
             Cursor = Cursors.WaitCursor; btnRefresh.Enabled = false;
             try
             {
@@ -47,12 +48,14 @@ namespace HFDrelays
                     s += AddString(s, "Red");
                     ss += "R";
                     fillRed = true;
+                    LastAlertTime = DateTime.Now;
                 }
                 if ((bits & 2) != 0)
                 {
                     s += AddString(s, "Yellow");
                     ss += "Y";
                     fillYellow = true;
+                    LastAlertTime = DateTime.Now;
                 }
                 if ((bits & 4) != 0)
                 {
@@ -60,13 +63,23 @@ namespace HFDrelays
                     ss += "G";
                     fillGreen = true;
                 }
+                if ((bits & 8) != 0)
+                {
+                    s += AddString(s, "Blue");
+                    ss += "B";
+                    fillBlue=true;
+                }
                 s = s.Trim();
                 if (s == string.Empty)
                     s = "No alerts.";
                 s += string.Format("   {0:0.0} ms", (DateTime.Now - start).TotalMilliseconds);
                 label1.Text = s;
                 if (serialPort1.IsOpen)
+                {
                     serialPort1.WriteLine(ss);
+                    if ((DateTime.Now - LastAlertTime).TotalHours < 12.0)
+                        serialPort1.WriteLine("B");
+                }
                 if (bits != lastBits)
                     this.Invalidate();
                 lastBits = bits;
@@ -108,10 +121,21 @@ namespace HFDrelays
         {
             string ss = s.Trim();
             string r = string.Empty; // = s.Trim();
+            char lastCh = 'c';
+            int numericChange = 0;
             foreach (char ch in ss)
             {
                 if (ch >= ' ' && ch <= 127)
+                {
+                    if (char.IsNumber(ch) != char.IsNumber(lastCh))
+                        numericChange++;
+                    if (numericChange >= 2)
+                        break;
                     r += ch;
+                }
+                else
+                    break;
+                lastCh = ch;
             }
             return r;
         }
@@ -179,6 +203,7 @@ namespace HFDrelays
         bool fillRed = false;
         bool fillGreen = true;
         bool fillYellow = true;
+        bool fillBlue = false;
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             int y1 = cbPorts.Top; // +cbPorts.Height;
@@ -194,6 +219,7 @@ namespace HFDrelays
             { c = Color.Red; }
             if (fillYellow)
             { c = Color.Yellow; }
+            if (fillBlue) { c = Color.Blue; }
             using (Brush b = new SolidBrush(c))
             {
                 e.Graphics.FillEllipse(b, x2, y2, wid, wid);
@@ -235,6 +261,37 @@ namespace HFDrelays
             string s = string.Format("{0:yyMMddHHmmss}", DateTime.Now);
             if (serialPort1.IsOpen)
                 serialPort1.WriteLine(s);
+        }
+
+        private float getTemperatureF()
+        {
+            float r = 0;
+            com.cdyne.wsf.Weather w = new com.cdyne.wsf.Weather();
+            //com.cdyne.wsf.ForecastReturn fr = w.GetCityForecastByZIP("93306");
+            com.cdyne.wsf.WeatherReturn f = w.GetCityWeatherByZIP("93301"); //.GetCityForecastByZIP("93306");
+            //object o = f.ResponseText; // fr.ForecastResult.GetValue();
+            
+            if(!float.TryParse(f.Temperature,out r)) {
+
+            }
+            return r;
+        }
+
+        private void btnTemp_Click(object sender, EventArgs e)
+        {
+            btnTemp.Enabled = false;
+            float temperatureF = getTemperatureF();
+            label5.Text = string.Format("{0:0.0} F", temperatureF);
+            btnTemp.Enabled = true;
+        }
+
+        private void blueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //digitalWrite(pinBlue, HIGH);
+            testing = true;
+            bits = 8;
+            AlertRefresh();
+            this.Invalidate();
         }
     }
 }

@@ -44,6 +44,9 @@
             this.yellowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnTemp = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.blueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,7 +126,7 @@
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "Close";
             // 
             // testToolStripMenuItem
@@ -131,29 +134,30 @@
             this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.redToolStripMenuItem,
             this.yellowToolStripMenuItem,
+            this.blueToolStripMenuItem,
             this.greenToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.testToolStripMenuItem.Text = "Test";
             // 
             // redToolStripMenuItem
             // 
             this.redToolStripMenuItem.Name = "redToolStripMenuItem";
-            this.redToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.redToolStripMenuItem.Text = "Red";
             this.redToolStripMenuItem.Click += new System.EventHandler(this.redToolStripMenuItem_Click);
             // 
             // yellowToolStripMenuItem
             // 
             this.yellowToolStripMenuItem.Name = "yellowToolStripMenuItem";
-            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.yellowToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.yellowToolStripMenuItem.Text = "Yellow";
             this.yellowToolStripMenuItem.Click += new System.EventHandler(this.yellowToolStripMenuItem_Click);
             // 
             // greenToolStripMenuItem
             // 
             this.greenToolStripMenuItem.Name = "greenToolStripMenuItem";
-            this.greenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.greenToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.greenToolStripMenuItem.Text = "Green";
             this.greenToolStripMenuItem.Click += new System.EventHandler(this.greenToolStripMenuItem_Click);
             // 
@@ -167,11 +171,40 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "label4";
             // 
+            // btnTemp
+            // 
+            this.btnTemp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTemp.Location = new System.Drawing.Point(283, 226);
+            this.btnTemp.Name = "btnTemp";
+            this.btnTemp.Size = new System.Drawing.Size(89, 23);
+            this.btnTemp.TabIndex = 7;
+            this.btnTemp.Text = "Temperature F";
+            this.btnTemp.UseVisualStyleBackColor = true;
+            this.btnTemp.Click += new System.EventHandler(this.btnTemp_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(280, 198);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(76, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Temperature F";
+            // 
+            // blueToolStripMenuItem
+            // 
+            this.blueToolStripMenuItem.Name = "blueToolStripMenuItem";
+            this.blueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.blueToolStripMenuItem.Text = "Blue";
+            this.blueToolStripMenuItem.Click += new System.EventHandler(this.blueToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 261);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.btnTemp);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cbPorts);
@@ -210,6 +243,9 @@
         private System.Windows.Forms.ToolStripMenuItem yellowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem greenToolStripMenuItem;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnTemp;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ToolStripMenuItem blueToolStripMenuItem;
     }
 }
 

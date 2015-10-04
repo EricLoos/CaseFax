@@ -51,6 +51,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Web References\com.cdyne.wsf\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\ServiceReference1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -78,6 +83,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Web References\com.cdyne.wsf\ForecastReturn.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.cdyne.wsf\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\com.cdyne.wsf\Weather.wsdl" />
+    <None Include="Web References\com.cdyne.wsf\WeatherDescription.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.cdyne.wsf\WeatherReturn.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\ServiceReference1\getalerts.wsdl" />
     <None Include="Web References\ServiceReference1\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
@@ -105,9 +124,23 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>HFDrelays_ServiceReference1_GetAlerts</CachedSettingsPropName>
     </WebReferenceUrl>
+    <WebReferenceUrl Include="http://wsf.cdyne.com/WeatherWS/Weather.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\com.cdyne.wsf\</RelPath>
+      <UpdateFromURL>http://wsf.cdyne.com/WeatherWS/Weather.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>HFDrelays_com_cdyne_wsf_Weather</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\ServiceReference1\getalerts.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\com.cdyne.wsf\Weather.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
