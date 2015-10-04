@@ -42,5 +42,15 @@ namespace HFDrelays.Properties {
                 return ((string)(this["HFDrelays_com_cdyne_wsf_Weather"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://www.webservicex.net/globalweather.asmx")]
+        public string HFDrelays_net_webservicex_www_GlobalWeather {
+            get {
+                return ((string)(this["HFDrelays_net_webservicex_www_GlobalWeather"]));
+            }
+        }
     }
 }

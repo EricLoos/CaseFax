@@ -8,6 +8,10 @@ using System.Text;
 //Cusing System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+//using System.Web.Services;
+using System.Net;
+using System.Collections.Specialized;
+using System.IO;
 
 namespace HFDrelays
 {
@@ -276,11 +280,17 @@ namespace HFDrelays
             }
             return r;
         }
-
+        private float getTempF()
+        {
+            float r = 0;
+            net.webservicex.www.GlobalWeather gw = new net.webservicex.www.GlobalWeather();
+            string weather = gw.GetWeather("Bakersfield", "United States");
+            return r;
+        }
         private void btnTemp_Click(object sender, EventArgs e)
         {
             btnTemp.Enabled = false;
-            float temperatureF = getTemperatureF();
+            float temperatureF = getKtempF();
             label5.Text = string.Format("{0:0.0} F", temperatureF);
             btnTemp.Enabled = true;
         }
@@ -292,6 +302,51 @@ namespace HFDrelays
             bits = 8;
             AlertRefresh();
             this.Invalidate();
+        }
+        private string temp = '"' + "temp" + '"'+':';
+        private float getKtempF()
+        {
+            float f = 0;
+            var request = (HttpWebRequest)WebRequest.Create("http://api.openweathermap.org/data/2.5/weather?zip=93306,us");
+
+            var postData = "zip=93305,us";
+            //postData += "&thing2=world";
+            postData = "";
+            var data = Encoding.ASCII.GetBytes(postData);
+
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            int pos = responseString.IndexOf(temp);
+            string nums = "";
+            if (pos >= 0)
+            {
+                char ch;
+                for (int i = 0; i < 12; i++)
+                {
+                    ch = responseString[i + temp.Length + pos];
+                    if (ch == ',')
+                        break;
+                    nums += ch;
+                }
+            }
+            float k;
+            if (float.TryParse(nums, out k))
+            {
+                
+                // ° F = 9/5(K - 273) + 32
+                f = (k - 273) * 9 / 5 + 32;
+            }
+            return f;
         }
     }
 }

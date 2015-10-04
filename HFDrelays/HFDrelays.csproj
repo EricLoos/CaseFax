@@ -56,6 +56,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="Web References\net.webservicex.www\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
     <Compile Include="Web References\ServiceReference1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -97,6 +102,11 @@
     <None Include="Web References\com.cdyne.wsf\WeatherReturn.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
+    <None Include="Web References\net.webservicex.www\globalweather.wsdl" />
+    <None Include="Web References\net.webservicex.www\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <None Include="Web References\ServiceReference1\getalerts.wsdl" />
     <None Include="Web References\ServiceReference1\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
@@ -135,12 +145,26 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>HFDrelays_com_cdyne_wsf_Weather</CachedSettingsPropName>
     </WebReferenceUrl>
+    <WebReferenceUrl Include="http://www.webservicex.net/globalweather.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\net.webservicex.www\</RelPath>
+      <UpdateFromURL>http://www.webservicex.net/globalweather.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>HFDrelays_net_webservicex_www_GlobalWeather</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\ServiceReference1\getalerts.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\com.cdyne.wsf\Weather.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\net.webservicex.www\globalweather.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
