@@ -194,6 +194,7 @@ namespace HFDrelays
                             if (TimerHours % 4 == 0)
                                 SendTime();
                             TimerHours++;
+                            DoTemp();
                         }
                     }
                 }
@@ -289,12 +290,22 @@ namespace HFDrelays
         }
         private void btnTemp_Click(object sender, EventArgs e)
         {
+            DoTemp();
+        }
+        private void DoTemp()
+        {
             btnTemp.Enabled = false;
-            float temperatureF = getKtempF();
-            label5.Text = string.Format("{0:0.00}{1}F", temperatureF,(char)176);
-            if (serialPort1.IsOpen)
-                serialPort1.WriteLine('"' + string.Format("{0:0.00}{1}F", temperatureF,(char)1));
-            btnTemp.Enabled = true;
+            try
+            {
+                float temperatureF = getKtempF();
+                label5.Text = string.Format("{0:0.00}{1}F", temperatureF, (char)176);
+                if (serialPort1.IsOpen)
+                    serialPort1.WriteLine('"' + string.Format("{0:0.00}{1}F", temperatureF, (char)1));
+            }
+            finally
+            {
+                btnTemp.Enabled = true;
+            }
         }
 
         private void blueToolStripMenuItem_Click(object sender, EventArgs e)
