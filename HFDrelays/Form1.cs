@@ -300,14 +300,27 @@ namespace HFDrelays
                 float temperatureF = getKtempF();
                 label5.Text = string.Format("{0:0.00}{1}F", temperatureF, (char)176);
                 if (serialPort1.IsOpen)
-                    serialPort1.WriteLine('"' + string.Format("{0:0.00}{1}F", temperatureF, (char)1));
+                {
+                    //serialPort1.WriteLine('"' + padleft(8, string.Format("{0:0.0}{1}F", temperatureF, (char)1)));
+                    //serialPort1.WriteLine('"' + string.Format("{0:0.00}{1}F", temperatureF, (char)1));
+                    serialPort1.WriteLine('"' + padleft(8,string.Format("{0:0}{1}F", temperatureF, (char)1)));
+                }
             }
             finally
             {
                 btnTemp.Enabled = true;
             }
         }
-
+        public string padleft(int n, string s)
+        {
+            string r = s;
+            if (r.Length < n)
+            {
+                while (r.Length < n)
+                    r = " " + r;
+            }
+            return r;
+        }
         private void blueToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //digitalWrite(pinBlue, HIGH);
