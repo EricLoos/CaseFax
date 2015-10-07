@@ -30,6 +30,7 @@ namespace HFDrelays
         }
         int bits = 2, lastBits = 7;
         DateTime LastAlertTime = DateTime.MinValue;
+        double LastDuration = 0;
         private void AlertRefresh()
         {
             fillRed = false; fillGreen = false; fillYellow = false; fillBlue = false;
@@ -71,12 +72,13 @@ namespace HFDrelays
                 {
                     s += AddString(s, "Blue");
                     ss += "B";
-                    fillBlue=true;
+                    fillBlue = true;
                 }
                 s = s.Trim();
                 if (s == string.Empty)
                     s = "No alerts.";
-                s += string.Format("   {0:0.0} ms", (DateTime.Now - start).TotalMilliseconds);
+                LastDuration = (DateTime.Now - start).TotalMilliseconds;
+                s += string.Format("   {0:0.0} ms", LastDuration);
                 label1.Text = s;
                 if (serialPort1.IsOpen)
                 {
@@ -88,7 +90,7 @@ namespace HFDrelays
                     this.Invalidate();
                 lastBits = bits;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 label4.Text = ex.Message;
             }
@@ -303,13 +305,32 @@ namespace HFDrelays
                 {
                     //serialPort1.WriteLine('"' + padleft(8, string.Format("{0:0.0}{1}F", temperatureF, (char)1)));
                     //serialPort1.WriteLine('"' + string.Format("{0:0.00}{1}F", temperatureF, (char)1));
-                    serialPort1.WriteLine('"' + padleft(8,string.Format("{0:0}{1}F", temperatureF, (char)1)));
+                    
+                    serialPort1.WriteLine('"' + pad((int)Math.Round(LastDuration/1000.0),8,string.Format("{0:0}{1}F", temperatureF, (char)1)));
                 }
             }
             finally
             {
                 btnTemp.Enabled = true;
             }
+        }
+        public string pad(int i, int n, string s)
+        {
+            string r = i.ToString() + " " + s;
+            string p = "";
+            if (i.ToString().Length + s.Length < n)
+            {
+                int j = n - i.ToString().Length - s.Length;
+                if (j > 1)
+                {
+                    for (int k = 0; k < j; k++)
+                    {
+                        p += " ";
+                    }
+                    r = string.Format("{0}{1}{2}", i.ToString(), p, s);
+                }
+            }
+            return r;
         }
         public string padleft(int n, string s)
         {
