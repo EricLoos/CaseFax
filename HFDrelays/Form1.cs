@@ -191,12 +191,13 @@ namespace HFDrelays
                         TimerCount++;
                         testing = false;
                         AlertRefresh();
+                        DoTemp();
                         if (TimerCount % 6 == 0) // Hour
                         {
                             if (TimerHours % 4 == 0)
                                 SendTime();
                             TimerHours++;
-                            DoTemp();
+                            //DoTemp();
                         }
                     }
                 }
@@ -299,14 +300,16 @@ namespace HFDrelays
             btnTemp.Enabled = false;
             try
             {
-                float temperatureF = getKtempF();
+                float h;
+                float temperatureF = getKtempF(out h);
                 label5.Text = string.Format("{0:0.00}{1}F", temperatureF, (char)176);
                 if (serialPort1.IsOpen)
                 {
                     //serialPort1.WriteLine('"' + padleft(8, string.Format("{0:0.0}{1}F", temperatureF, (char)1)));
                     //serialPort1.WriteLine('"' + string.Format("{0:0.00}{1}F", temperatureF, (char)1));
                     
-                    serialPort1.WriteLine('"' + pad((int)Math.Round(LastDuration/1000.0),8,string.Format("{0:0}{1}F", temperatureF, (char)1)));
+                    //serialPort1.WriteLine('"' + pad((int)Math.Round(LastDuration/1000.0),8,string.Format("{0:0}{1}F", temperatureF, (char)1)));
+                    serialPort1.WriteLine('"' + pad((int)Math.Round(h), 8, string.Format("{0:0}{1}F", temperatureF, (char)1)));
                 }
             }
             finally
@@ -351,11 +354,17 @@ namespace HFDrelays
             this.Invalidate();
         }
         private string temp = '"' + "temp" + '"'+':';
+        private string humidity = '"' + "pressure" + '"' + ':';
         // http://stackoverflow.com/questions/4015324/http-request-with-post
-        private float getKtempF()
+        public string key = "fe137525494e03c8c62641ea9e35f4cf";
+        private float getKtempF(out float humidity_)
         {
             float f = 0;
-            var request = (HttpWebRequest)WebRequest.Create("http://api.openweathermap.org/data/2.5/weather?zip=93306,us");
+            humidity_ = 0;
+            string api = "http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID="+key;
+            /*var request = (HttpWebRequest)WebRequest.Create("http://api.openweathermap.org/data/2.5/weather?zip=93306,us");*/
+            api = "http://api.openweathermap.org/data/2.5/weather?q=bakersfield&APPID=fe137525494e03c8c62641ea9e35f4cf";
+            var request = (HttpWebRequest)WebRequest.Create(api);
             // http://api.openweathermap.org/data/2.5/weather?zip=93306,us
             var postData = "zip=93305,us";
             //postData += "&thing2=world";
@@ -375,7 +384,9 @@ namespace HFDrelays
 
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
             int pos = responseString.IndexOf(temp);
+            int pos2 = responseString.IndexOf(humidity);
             string nums = "";
+            string nums2 = "";
             if (pos >= 0)
             {
                 char ch;
@@ -386,6 +397,14 @@ namespace HFDrelays
                         break;
                     nums += ch;
                 }
+                nums2 = "";
+                for (int i = 0; i < 12; i++)
+                {
+                    ch = responseString[i + humidity.Length + pos2];
+                    if (ch == ',')
+                        break;
+                    nums2 += ch;
+                }
             }
             float k;
             if (float.TryParse(nums, out k))
@@ -394,7 +413,32 @@ namespace HFDrelays
                 // ° F = 9/5(K - 273) + 32
                 f = (k - 273) * 9 / 5 + 32;
             }
+            float h;
+            if (float.TryParse(nums2, out h))
+            {
+                humidity_ = h*0.03f;
+            }
             return f;
+        }
+
+        private void testFloatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                string s = "2222";
+                string o = "";
+                int i = 0;
+                char chr = ' ';
+                foreach (char ch in s)
+                {
+                    chr = ch;
+                    if (i == 0)
+                        chr |= (char)128;
+                    o += chr;
+                    i++;
+                }
+                serialPort1.WriteLine('"'+o);
+            }
         }
     }
 }
