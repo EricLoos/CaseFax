@@ -416,7 +416,9 @@ namespace HFDrelays
             float h;
             if (float.TryParse(nums2, out h))
             {
-                humidity_ = h*0.03f;
+                humidity_ = h*0.03f
+                    
+                    ;
             }
             return f;
         }
@@ -438,6 +440,36 @@ namespace HFDrelays
                     i++;
                 }
                 serialPort1.WriteLine('"'+o);
+            }
+        }
+
+        private void test0ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.WriteLine("t0");
+            }
+        }
+
+        private void test0ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.WriteLine("t0");
+            }
+        }
+
+        private void testNowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (serialPort1.IsOpen)
+            {
+                DateTime n = DateTime.Now;
+                DateTime dt1970;
+                if (DateTime.TryParse("1/1/1970", out dt1970))
+                {
+                    int secs = (int)(n - dt1970).TotalSeconds;
+                    serialPort1.WriteLine(string.Format("t{0}", secs));
+                }
             }
         }
     }

@@ -44,11 +44,13 @@
             this.yellowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.testFloatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label4 = new System.Windows.Forms.Label();
             this.btnTemp = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.testFloatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.test0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,7 +141,9 @@
             this.blueToolStripMenuItem,
             this.greenToolStripMenuItem,
             this.toolStripMenuItem1,
-            this.testFloatToolStripMenuItem});
+            this.testFloatToolStripMenuItem,
+            this.test0ToolStripMenuItem,
+            this.testNowToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.testToolStripMenuItem.Text = "Test";
@@ -172,6 +176,18 @@
             this.greenToolStripMenuItem.Text = "Green";
             this.greenToolStripMenuItem.Click += new System.EventHandler(this.greenToolStripMenuItem_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // testFloatToolStripMenuItem
+            // 
+            this.testFloatToolStripMenuItem.Name = "testFloatToolStripMenuItem";
+            this.testFloatToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.testFloatToolStripMenuItem.Text = "Test Float";
+            this.testFloatToolStripMenuItem.Click += new System.EventHandler(this.testFloatToolStripMenuItem_Click);
+            // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -202,17 +218,19 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Temperature F";
             // 
-            // toolStripMenuItem1
+            // test0ToolStripMenuItem
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            this.test0ToolStripMenuItem.Name = "test0ToolStripMenuItem";
+            this.test0ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.test0ToolStripMenuItem.Text = "Test 0";
+            this.test0ToolStripMenuItem.Click += new System.EventHandler(this.test0ToolStripMenuItem_Click_1);
             // 
-            // testFloatToolStripMenuItem
+            // testNowToolStripMenuItem
             // 
-            this.testFloatToolStripMenuItem.Name = "testFloatToolStripMenuItem";
-            this.testFloatToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.testFloatToolStripMenuItem.Text = "Test Float";
-            this.testFloatToolStripMenuItem.Click += new System.EventHandler(this.testFloatToolStripMenuItem_Click);
+            this.testNowToolStripMenuItem.Name = "testNowToolStripMenuItem";
+            this.testNowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.testNowToolStripMenuItem.Text = "Test Now";
+            this.testNowToolStripMenuItem.Click += new System.EventHandler(this.testNowToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -264,6 +282,8 @@
         private System.Windows.Forms.ToolStripMenuItem blueToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem testFloatToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem test0ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem testNowToolStripMenuItem;
     }
 }
 
