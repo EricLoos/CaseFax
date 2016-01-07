@@ -264,11 +264,17 @@ namespace HFDrelays
             AlertRefresh();
             this.Invalidate();
         }
+        public bool Set1970 = true;
         private void SendTime()
         {
-            string s = string.Format("{0:yyMMddHHmmss}", DateTime.Now);
-            if (serialPort1.IsOpen)
-                serialPort1.WriteLine(s);
+            if (Set1970)
+                do1970();
+            else
+            {
+                string s = string.Format("{0:yyMMddHHmmss}", DateTime.Now);
+                if (serialPort1.IsOpen)
+                    serialPort1.WriteLine(s);
+            }
         }
 
         private float getTemperatureF()
@@ -460,6 +466,10 @@ namespace HFDrelays
         }
 
         private void testNowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            do1970();
+        }
+        public void do1970()
         {
             if (serialPort1.IsOpen)
             {
