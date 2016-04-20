@@ -46,11 +46,13 @@
             this.greenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.testFloatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.test0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearBlueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label4 = new System.Windows.Forms.Label();
             this.btnTemp = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.test0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.testNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.playMP3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -143,7 +145,9 @@
             this.toolStripMenuItem1,
             this.testFloatToolStripMenuItem,
             this.test0ToolStripMenuItem,
-            this.testNowToolStripMenuItem});
+            this.testNowToolStripMenuItem,
+            this.clearBlueToolStripMenuItem,
+            this.playMP3ToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.testToolStripMenuItem.Text = "Test";
@@ -188,6 +192,27 @@
             this.testFloatToolStripMenuItem.Text = "Test Float";
             this.testFloatToolStripMenuItem.Click += new System.EventHandler(this.testFloatToolStripMenuItem_Click);
             // 
+            // test0ToolStripMenuItem
+            // 
+            this.test0ToolStripMenuItem.Name = "test0ToolStripMenuItem";
+            this.test0ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.test0ToolStripMenuItem.Text = "Test 0";
+            this.test0ToolStripMenuItem.Click += new System.EventHandler(this.test0ToolStripMenuItem_Click_1);
+            // 
+            // testNowToolStripMenuItem
+            // 
+            this.testNowToolStripMenuItem.Name = "testNowToolStripMenuItem";
+            this.testNowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.testNowToolStripMenuItem.Text = "Test Now";
+            this.testNowToolStripMenuItem.Click += new System.EventHandler(this.testNowToolStripMenuItem_Click);
+            // 
+            // clearBlueToolStripMenuItem
+            // 
+            this.clearBlueToolStripMenuItem.Name = "clearBlueToolStripMenuItem";
+            this.clearBlueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearBlueToolStripMenuItem.Text = "Clear Blue";
+            this.clearBlueToolStripMenuItem.Click += new System.EventHandler(this.clearBlueToolStripMenuItem_Click);
+            // 
             // label4
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -211,26 +236,20 @@
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(280, 198);
+            this.label5.Location = new System.Drawing.Point(280, 210);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(76, 13);
             this.label5.TabIndex = 8;
             this.label5.Text = "Temperature F";
             // 
-            // test0ToolStripMenuItem
+            // playMP3ToolStripMenuItem
             // 
-            this.test0ToolStripMenuItem.Name = "test0ToolStripMenuItem";
-            this.test0ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.test0ToolStripMenuItem.Text = "Test 0";
-            this.test0ToolStripMenuItem.Click += new System.EventHandler(this.test0ToolStripMenuItem_Click_1);
-            // 
-            // testNowToolStripMenuItem
-            // 
-            this.testNowToolStripMenuItem.Name = "testNowToolStripMenuItem";
-            this.testNowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.testNowToolStripMenuItem.Text = "Test Now";
-            this.testNowToolStripMenuItem.Click += new System.EventHandler(this.testNowToolStripMenuItem_Click);
+            this.playMP3ToolStripMenuItem.Name = "playMP3ToolStripMenuItem";
+            this.playMP3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.playMP3ToolStripMenuItem.Text = "Play MP3";
+            this.playMP3ToolStripMenuItem.Click += new System.EventHandler(this.playMP3ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -284,6 +303,8 @@
         private System.Windows.Forms.ToolStripMenuItem testFloatToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem test0ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testNowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearBlueToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem playMP3ToolStripMenuItem;
     }
 }
 

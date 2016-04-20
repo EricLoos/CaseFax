@@ -111,6 +111,7 @@ namespace HFDrelays
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            player = new WMPLib.WindowsMediaPlayer();
             label1.Text = "";
             RefreshStatus();
             cbPorts.Items.Clear();
@@ -174,10 +175,11 @@ namespace HFDrelays
         int TimerSeconds = 0;
         int TimerCount = 0;
         int TimerHours = 0;
+        bool DoChime = true;
         private void timer1_Tick(object sender, EventArgs e)
         {
             timer1.Enabled = false;
-
+            DateTime n = DateTime.Now;
             try
             {
                 TimerSeconds++;
@@ -185,6 +187,14 @@ namespace HFDrelays
                 {
                     TimerSeconds = 0;
                     TimerMinutes++;
+                    if (n.Minute == 0 && n.Hour>=7 && n.Hour<=21)
+                    {
+                        if (DoChime)
+                        {
+                            PlayMP3();
+                            DoChime = false;
+                        }
+                    }
                     if (TimerMinutes >= MaxMinutes)
                     {
                         TimerMinutes = 0;
@@ -199,6 +209,7 @@ namespace HFDrelays
                             TimerHours++;
                             //DoTemp();
                         }
+                        DoChime = true;
                     }
                 }
                 RefreshStatus();
@@ -315,7 +326,7 @@ namespace HFDrelays
                     //serialPort1.WriteLine('"' + string.Format("{0:0.00}{1}F", temperatureF, (char)1));
                     
                     //serialPort1.WriteLine('"' + pad((int)Math.Round(LastDuration/1000.0),8,string.Format("{0:0}{1}F", temperatureF, (char)1)));
-                    serialPort1.WriteLine('"' + pad((int)Math.Round(h), 8, string.Format("{0:0}{1}F", temperatureF, (char)1)));
+                    serialPort1.WriteLine('"' + pad((int)Math.Round(h), 8, string.Format("{0:0}{1}F", temperatureF, (char)46)));
                 }
             }
             finally
@@ -367,64 +378,71 @@ namespace HFDrelays
         {
             float f = 0;
             humidity_ = 0;
-            string api = "http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID="+key;
-            /*var request = (HttpWebRequest)WebRequest.Create("http://api.openweathermap.org/data/2.5/weather?zip=93306,us");*/
-            api = "http://api.openweathermap.org/data/2.5/weather?q=bakersfield&APPID=fe137525494e03c8c62641ea9e35f4cf";
-            var request = (HttpWebRequest)WebRequest.Create(api);
-            // http://api.openweathermap.org/data/2.5/weather?zip=93306,us
-            var postData = "zip=93305,us";
-            //postData += "&thing2=world";
-            postData = "";
-            var data = Encoding.ASCII.GetBytes(postData);
-
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-
-            using (var stream = request.GetRequestStream())
+            try
             {
-                stream.Write(data, 0, data.Length);
-            }
+                string api = "http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=" + key;
+                /*var request = (HttpWebRequest)WebRequest.Create("http://api.openweathermap.org/data/2.5/weather?zip=93306,us");*/
+                api = "http://api.openweathermap.org/data/2.5/weather?q=bakersfield&APPID=fe137525494e03c8c62641ea9e35f4cf";
+                var request = (HttpWebRequest)WebRequest.Create(api);
+                // http://api.openweathermap.org/data/2.5/weather?zip=93306,us
+                var postData = "zip=93305,us";
+                //postData += "&thing2=world";
+                postData = "";
+                var data = Encoding.ASCII.GetBytes(postData);
 
-            var response = (HttpWebResponse)request.GetResponse();
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = data.Length;
 
-            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            int pos = responseString.IndexOf(temp);
-            int pos2 = responseString.IndexOf(humidity);
-            string nums = "";
-            string nums2 = "";
-            if (pos >= 0)
-            {
-                char ch;
-                for (int i = 0; i < 12; i++)
+                using (var stream = request.GetRequestStream())
                 {
-                    ch = responseString[i + temp.Length + pos];
-                    if (ch == ',')
-                        break;
-                    nums += ch;
+                    stream.Write(data, 0, data.Length);
                 }
-                nums2 = "";
-                for (int i = 0; i < 12; i++)
+
+                var response = (HttpWebResponse)request.GetResponse();
+
+                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                int pos = responseString.IndexOf(temp);
+                int pos2 = responseString.IndexOf(humidity);
+                string nums = "";
+                string nums2 = "";
+                if (pos >= 0)
                 {
-                    ch = responseString[i + humidity.Length + pos2];
-                    if (ch == ',')
-                        break;
-                    nums2 += ch;
+                    char ch;
+                    for (int i = 0; i < 12; i++)
+                    {
+                        ch = responseString[i + temp.Length + pos];
+                        if (ch == ',')
+                            break;
+                        nums += ch;
+                    }
+                    nums2 = "";
+                    for (int i = 0; i < 12; i++)
+                    {
+                        ch = responseString[i + humidity.Length + pos2];
+                        if (ch == ',')
+                            break;
+                        nums2 += ch;
+                    }
+                }
+                float k;
+                if (float.TryParse(nums, out k))
+                {
+
+                    // ° F = 9/5(K - 273) + 32
+                    f = (k - 273) * 9 / 5 + 32;
+                }
+                float h;
+                if (float.TryParse(nums2, out h))
+                {
+                    humidity_ = h * 0.03f
+
+                        ;
                 }
             }
-            float k;
-            if (float.TryParse(nums, out k))
+            catch (Exception ex)
             {
-                
-                // ° F = 9/5(K - 273) + 32
-                f = (k - 273) * 9 / 5 + 32;
-            }
-            float h;
-            if (float.TryParse(nums2, out h))
-            {
-                humidity_ = h*0.03f
-                    
-                    ;
+                label4.Text = ex.Message;
             }
             return f;
         }
@@ -455,6 +473,7 @@ namespace HFDrelays
             {
                 serialPort1.WriteLine("t0");
             }
+            //LastAlertTime = DateTime.Now.AddDays(-1);
         }
 
         private void test0ToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -462,7 +481,8 @@ namespace HFDrelays
             if (serialPort1.IsOpen)
             {
                 serialPort1.WriteLine("t0");
-            }
+            } 
+            //LastAlertTime = DateTime.Now.AddDays(-1);
         }
 
         private void testNowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -481,6 +501,23 @@ namespace HFDrelays
                     serialPort1.WriteLine(string.Format("t{0}", secs));
                 }
             }
+        }
+
+        private void clearBlueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LastAlertTime = DateTime.Now.AddDays(-1);
+        }
+        WMPLib.WindowsMediaPlayer player;
+        public void PlayMP3()
+        {
+            //player = new WMPLib.WindowsMediaPlayer();
+            player.URL=@"C:\Users\Eric\Downloads\big ben - tower of london12b.mp3";
+            player.controls.play();        
+        }
+
+        private void playMP3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PlayMP3();
         }
     }
 }
