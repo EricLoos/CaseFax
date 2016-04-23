@@ -111,6 +111,7 @@ namespace HFDrelays
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            label6.Text = "";
             player = new WMPLib.WindowsMediaPlayer();
             label1.Text = "";
             RefreshStatus();
@@ -187,13 +188,26 @@ namespace HFDrelays
                 {
                     TimerSeconds = 0;
                     TimerMinutes++;
-                    if (n.Minute == 0 && n.Hour>=7 && n.Hour<=21)
+                    bool OkToChime = n.Minute == 0 && n.Hour >= 7 && n.Hour <= 21;
+                    if (n.DayOfWeek == DayOfWeek.Saturday || n.DayOfWeek == DayOfWeek.Sunday)
+                        OkToChime = n.Minute == 0 && n.Hour >= 9 && n.Hour <= 19;
+                    if (OkToChime) //n.Minute == 0 && n.Hour>=7 && n.Hour<=21)
                     {
                         if (DoChime)
                         {
-                            PlayMP3();
+                            int hr = n.Hour;
+                            if (hr > 12)
+                                hr -= 12;
+                            if (hr == 0)
+                                hr = 12;
+                            PlayMP3(hr);
                             DoChime = false;
                         }
+                    }
+                    if (n.Minute == 10)
+                    {
+                        label6.Text = "";
+                        DoChime = true;
                     }
                     if (TimerMinutes >= MaxMinutes)
                     {
@@ -209,7 +223,7 @@ namespace HFDrelays
                             TimerHours++;
                             //DoTemp();
                         }
-                        DoChime = true;
+                        //DoChime = true;
                     }
                 }
                 RefreshStatus();
@@ -508,16 +522,23 @@ namespace HFDrelays
             LastAlertTime = DateTime.Now.AddDays(-1);
         }
         WMPLib.WindowsMediaPlayer player;
-        public void PlayMP3()
+        string ChimesConst = @"C:\Users\Eric\Downloads\big ben - tower of london{0}.mp3";
+        public void PlayMP3(int chimes)
         {
+            if (chimes > 12 || chimes < 1)
+                chimes = 1;
+            label6.Text = string.Format("Play {0}", chimes);
+            string fn = string.Format(ChimesConst,chimes);
+            if (!System.IO.File.Exists(fn))
+                fn = string.Format(ChimesConst, 1);
             //player = new WMPLib.WindowsMediaPlayer();
-            player.URL=@"C:\Users\Eric\Downloads\big ben - tower of london12b.mp3";
+            player.URL = fn; //  @"C:\Users\Eric\Downloads\big ben - tower of london12b.mp3";
             player.controls.play();        
         }
 
         private void playMP3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PlayMP3();
+            PlayMP3(1);
         }
     }
 }

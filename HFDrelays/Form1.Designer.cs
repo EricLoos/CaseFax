@@ -53,6 +53,7 @@
             this.btnTemp = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.playMP3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label6 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -251,11 +252,22 @@
             this.playMP3ToolStripMenuItem.Text = "Play MP3";
             this.playMP3ToolStripMenuItem.Click += new System.EventHandler(this.playMP3ToolStripMenuItem_Click);
             // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.Location = new System.Drawing.Point(272, 104);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(100, 15);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "label6";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 261);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnTemp);
             this.Controls.Add(this.label4);
@@ -305,6 +317,7 @@
         private System.Windows.Forms.ToolStripMenuItem testNowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearBlueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem playMP3ToolStripMenuItem;
+        private System.Windows.Forms.Label label6;
     }
 }
 
