@@ -188,7 +188,8 @@ namespace HFDrelays
                 {
                     TimerSeconds = 0;
                     TimerMinutes++;
-                    bool OkToChime = n.Minute == 0 && n.Hour >= 7 && n.Hour <= 21;
+                    bool OkToChime = false;
+                    OkToChime = n.Minute == 0 && n.Hour >= 7 && n.Hour <= 21;
                     if (n.DayOfWeek == DayOfWeek.Saturday || n.DayOfWeek == DayOfWeek.Sunday)
                         OkToChime = n.Minute == 0 && n.Hour >= 9 && n.Hour <= 19;
                     if (OkToChime) //n.Minute == 0 && n.Hour>=7 && n.Hour<=21)
