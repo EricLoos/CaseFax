@@ -192,7 +192,7 @@ namespace HFDrelays
                     
                     OkToChime = n.Minute == 0 && n.Hour >= 7 && n.Hour <= 21; // Every day of week
                     if (n.DayOfWeek == DayOfWeek.Saturday || n.DayOfWeek == DayOfWeek.Sunday)
-                        OkToChime = n.Minute == 0 && n.Hour >= 9 && n.Hour <= 19; // Weekends only.
+                        OkToChime = n.Minute == 0 && n.Hour >= 9 && n.Hour <= 22; // Weekends only.
                     if (OkToChime) //n.Minute == 0 && n.Hour>=7 && n.Hour<=21)
                     {
                         if (DoChime)
@@ -540,7 +540,24 @@ namespace HFDrelays
 
         private void playMP3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PlayMP3(1);
+            //PlayMP3(1);
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            int v;
+            if (sender is MenuItem)
+            {
+                MenuItem m = (sender as MenuItem);
+                if (int.TryParse(m.Text, out v))
+                    PlayMP3(v);
+            }
+            if (sender is ToolStripMenuItem)
+            {
+                ToolStripMenuItem m = (sender as ToolStripMenuItem);
+                if (int.TryParse(m.Text, out v))
+                    PlayMP3(v);
+            }
         }
     }
 }
