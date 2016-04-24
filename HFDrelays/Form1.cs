@@ -181,6 +181,7 @@ namespace HFDrelays
         {
             timer1.Enabled = false;
             DateTime n = DateTime.Now;
+            bool OkToChime = false;
             try
             {
                 TimerSeconds++;
@@ -188,10 +189,10 @@ namespace HFDrelays
                 {
                     TimerSeconds = 0;
                     TimerMinutes++;
-                    bool OkToChime = false;
-                    OkToChime = n.Minute == 0 && n.Hour >= 7 && n.Hour <= 21;
+                    
+                    OkToChime = n.Minute == 0 && n.Hour >= 7 && n.Hour <= 21; // Every day of week
                     if (n.DayOfWeek == DayOfWeek.Saturday || n.DayOfWeek == DayOfWeek.Sunday)
-                        OkToChime = n.Minute == 0 && n.Hour >= 9 && n.Hour <= 19;
+                        OkToChime = n.Minute == 0 && n.Hour >= 9 && n.Hour <= 19; // Weekends only.
                     if (OkToChime) //n.Minute == 0 && n.Hour>=7 && n.Hour<=21)
                     {
                         if (DoChime)
