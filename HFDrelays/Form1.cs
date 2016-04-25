@@ -161,7 +161,7 @@ namespace HFDrelays
                 {
                     serialPort1.PortName = (string)cbPorts.SelectedItem;
                     serialPort1.Open();
-                    
+
                     MessageBox.Show("Serial port has been opened successfully.");
                     SendTime();
                 }
@@ -189,10 +189,10 @@ namespace HFDrelays
                 {
                     TimerSeconds = 0;
                     TimerMinutes++;
-                    
+
                     OkToChime = n.Minute == 0 && n.Hour >= 7 && n.Hour <= 21; // Every day of week
                     if (n.DayOfWeek == DayOfWeek.Saturday || n.DayOfWeek == DayOfWeek.Sunday)
-                        OkToChime = n.Minute == 0 && n.Hour >= 9 && n.Hour <= 22; // Weekends only.
+                        OkToChime = n.Minute == 0 && n.Hour >= 9 && n.Hour <= 21; // Weekends only.
                     if (OkToChime) //n.Minute == 0 && n.Hour>=7 && n.Hour<=21)
                     {
                         if (DoChime)
@@ -311,8 +311,9 @@ namespace HFDrelays
             //com.cdyne.wsf.ForecastReturn fr = w.GetCityForecastByZIP("93306");
             com.cdyne.wsf.WeatherReturn f = w.GetCityWeatherByZIP("93301"); //.GetCityForecastByZIP("93306");
             //object o = f.ResponseText; // fr.ForecastResult.GetValue();
-            
-            if(!float.TryParse(f.Temperature,out r)) {
+
+            if (!float.TryParse(f.Temperature, out r))
+            {
 
             }
             return r;
@@ -340,7 +341,7 @@ namespace HFDrelays
                 {
                     //serialPort1.WriteLine('"' + padleft(8, string.Format("{0:0.0}{1}F", temperatureF, (char)1)));
                     //serialPort1.WriteLine('"' + string.Format("{0:0.00}{1}F", temperatureF, (char)1));
-                    
+
                     //serialPort1.WriteLine('"' + pad((int)Math.Round(LastDuration/1000.0),8,string.Format("{0:0}{1}F", temperatureF, (char)1)));
                     serialPort1.WriteLine('"' + pad((int)Math.Round(h), 8, string.Format("{0:0}{1}F", temperatureF, (char)46)));
                 }
@@ -386,7 +387,7 @@ namespace HFDrelays
             AlertRefresh();
             this.Invalidate();
         }
-        private string temp = '"' + "temp" + '"'+':';
+        private string temp = '"' + "temp" + '"' + ':';
         private string humidity = '"' + "pressure" + '"' + ':';
         // http://stackoverflow.com/questions/4015324/http-request-with-post
         public string key = "fe137525494e03c8c62641ea9e35f4cf";
@@ -479,7 +480,7 @@ namespace HFDrelays
                     o += chr;
                     i++;
                 }
-                serialPort1.WriteLine('"'+o);
+                serialPort1.WriteLine('"' + o);
             }
         }
 
@@ -497,7 +498,7 @@ namespace HFDrelays
             if (serialPort1.IsOpen)
             {
                 serialPort1.WriteLine("t0");
-            } 
+            }
             //LastAlertTime = DateTime.Now.AddDays(-1);
         }
 
@@ -530,12 +531,12 @@ namespace HFDrelays
             if (chimes > 12 || chimes < 1)
                 chimes = 1;
             label6.Text = string.Format("Play {0}", chimes);
-            string fn = string.Format(ChimesConst,chimes);
+            string fn = string.Format(ChimesConst, chimes);
             if (!System.IO.File.Exists(fn))
                 fn = string.Format(ChimesConst, 1);
             //player = new WMPLib.WindowsMediaPlayer();
             player.URL = fn; //  @"C:\Users\Eric\Downloads\big ben - tower of london12b.mp3";
-            player.controls.play();        
+            player.controls.play();
         }
 
         private void playMP3ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -558,6 +559,82 @@ namespace HFDrelays
                 if (int.TryParse(m.Text, out v))
                     PlayMP3(v);
             }
+        }
+        private string GetSupportCounts()
+        {
+            string r = "";
+            var request = (HttpWebRequest)WebRequest.Create("http://210.classact.us/pendingsupport/");
+
+            var postData = "thing1=hello";
+            postData += "&thing2=world";
+            var data = Encoding.ASCII.GetBytes(postData);
+
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            //var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            r = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            return r;
+        }
+
+        private void getSupportCountsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DateTime StartTime = DateTime.Now;
+            string s = GetSupportCounts();
+            getCounts(s);
+            double ms = (DateTime.Now - StartTime).TotalMilliseconds;
+            s = string.Format("{0:0.0 ms}\r\n", ms) + s;
+            s += "\r\n";
+            for (int i = 0; i < 3; i++)
+            {
+                s += string.Format("{0}, ", counts[i]);
+            }
+            MessageBox.Show(s);
+        }
+        double[] counts = { 0, 0, 0 };
+        string div = "<div";
+        public bool getCounts(string s)
+        {
+            bool r = false;
+            int oldPos = 0, pos = 0, mode = 0, v = 0;
+            char ch;
+            string res = "";
+            for (int iPos = 0; iPos < 3; iPos++)
+            {
+                counts[iPos] = 0;
+                pos = s.IndexOf(div, oldPos);
+                if (pos > 0)
+                {
+                    res = "";
+                    mode = 0;
+                    for (int i = pos + div.Length; i < s.Length; i++)
+                    {
+                        ch = s[i];
+                        if (ch == '>')
+                            mode++;
+                        if (ch == '<')
+                            break;
+                        if (mode == 1)
+                        {
+                            if (ch >= '0' && ch <= '9')
+                                res += ch;
+                        }
+                    }
+                    if (int.TryParse(res, out v))
+                        counts[iPos] = v;
+                }
+
+                oldPos = pos + div.Length;
+            }
+            return r;
         }
     }
 }

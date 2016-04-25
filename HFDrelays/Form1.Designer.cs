@@ -66,6 +66,7 @@
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
+            this.getSupportCountsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -160,7 +161,8 @@
             this.test0ToolStripMenuItem,
             this.testNowToolStripMenuItem,
             this.clearBlueToolStripMenuItem,
-            this.playMP3ToolStripMenuItem});
+            this.playMP3ToolStripMenuItem,
+            this.getSupportCountsToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
             this.testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.testToolStripMenuItem.Text = "Test";
@@ -369,6 +371,13 @@
             this.toolStripMenuItem14.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem14.Text = "12";
             // 
+            // getSupportCountsToolStripMenuItem
+            // 
+            this.getSupportCountsToolStripMenuItem.Name = "getSupportCountsToolStripMenuItem";
+            this.getSupportCountsToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.getSupportCountsToolStripMenuItem.Text = "Get Support Counts";
+            this.getSupportCountsToolStripMenuItem.Click += new System.EventHandler(this.getSupportCountsToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -437,6 +446,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
+        private System.Windows.Forms.ToolStripMenuItem getSupportCountsToolStripMenuItem;
     }
 }
 
