@@ -190,7 +190,7 @@ namespace HFDrelays
                     TimerSeconds = 0;
                     TimerMinutes++;
 
-                    OkToChime = n.Minute == 0 && n.Hour >= 7 && n.Hour <= 21; // Every day of week
+                    OkToChime = n.Minute == 0 && n.Hour >= 6 && n.Hour <= 21; // Every day of week
                     if (n.DayOfWeek == DayOfWeek.Saturday || n.DayOfWeek == DayOfWeek.Sunday)
                         OkToChime = n.Minute == 0 && n.Hour >= 9 && n.Hour <= 21; // Weekends only.
                     if (OkToChime) //n.Minute == 0 && n.Hour>=7 && n.Hour<=21)
@@ -595,45 +595,58 @@ namespace HFDrelays
             s += "\r\n";
             for (int i = 0; i < 3; i++)
             {
-                s += string.Format("{0}, ", counts[i]);
+                s += string.Format("{0} = {1}, ", titleList[i], counts[i]);
             }
             MessageBox.Show(s);
         }
-        double[] counts = { 0, 0, 0 };
+        int[] counts = { 0, 0, 0 };
+        string[] titleList = { "", "", "" };
         string div = "<div";
         public bool getCounts(string s)
         {
             bool r = false;
-            int oldPos = 0, pos = 0, mode = 0, v = 0;
+            int oldPos = 0, pos = 0, mode = 0, v = 0, CorrectCount = 0;
             char ch;
-            string res = "";
+            string nums = "", titles = "";
             for (int iPos = 0; iPos < 3; iPos++)
             {
                 counts[iPos] = 0;
                 pos = s.IndexOf(div, oldPos);
                 if (pos > 0)
                 {
-                    res = "";
+                    nums = ""; titles = "";
                     mode = 0;
                     for (int i = pos + div.Length; i < s.Length; i++)
                     {
                         ch = s[i];
+                        if (ch == '"')
+                            mode++;
                         if (ch == '>')
                             mode++;
                         if (ch == '<')
                             break;
-                        if (mode == 1)
+                        if(mode==1)
+                        {
+                            if (ch != '"' && ch != '>' && ch != '<')
+                                titles += ch;
+                        }
+                        if (mode == 3)
                         {
                             if (ch >= '0' && ch <= '9')
-                                res += ch;
+                                nums += ch;
                         }
                     }
-                    if (int.TryParse(res, out v))
+                    if (int.TryParse(nums, out v))
+                    {
                         counts[iPos] = v;
+                        CorrectCount++;
+                    }
+                    titleList[iPos] = titles;
                 }
 
                 oldPos = pos + div.Length;
             }
+            r = CorrectCount == 3;
             return r;
         }
     }
