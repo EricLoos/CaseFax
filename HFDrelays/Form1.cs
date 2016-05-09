@@ -37,6 +37,7 @@ namespace HFDrelays
             Cursor = Cursors.WaitCursor; btnRefresh.Enabled = false;
             try
             {
+                
                 DateTime start = DateTime.Now;
                 if (!testing)
                 {
@@ -111,6 +112,7 @@ namespace HFDrelays
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            serialPort2.Open();
             label6.Text = "";
             player = new WMPLib.WindowsMediaPlayer();
             label1.Text = "";
@@ -218,6 +220,7 @@ namespace HFDrelays
                         testing = false;
                         AlertRefresh();
                         DoTemp();
+                        DoSupport();
                         if (TimerCount % 6 == 0) // Hour
                         {
                             if (TimerHours % 4 == 0)
@@ -234,6 +237,27 @@ namespace HFDrelays
             {
                 timer1.Enabled = true;
             }
+        }
+        bool DoSupport()
+        {
+            bool r = false;
+            string s = GetSupportCounts();
+            getCounts(s);
+            for (int i = 0; i < 3; i++)
+            {
+                if (counts[i] > 0)
+                {
+                    r = true;
+                    break;
+                }
+            }
+            if (r)
+            {
+                DateTime n = DateTime.Now;
+                if (n.Hour >= 8 && n.Hour <= 20 && n.DayOfWeek != DayOfWeek.Sunday && n.DayOfWeek != DayOfWeek.Saturday)
+                    PlayMP3(2);
+            }
+            return r;
         }
         bool fillRed = false;
         bool fillGreen = true;
@@ -500,6 +524,8 @@ namespace HFDrelays
                 serialPort1.WriteLine("t0");
             }
             //LastAlertTime = DateTime.Now.AddDays(-1);
+            if (serialPort2.IsOpen)
+                serialPort2.WriteLine("t0");
         }
 
         private void testNowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -516,6 +542,16 @@ namespace HFDrelays
                 {
                     int secs = (int)(n - dt1970).TotalSeconds;
                     serialPort1.WriteLine(string.Format("t{0}", secs));
+                }
+            }
+            if (serialPort2.IsOpen)
+            {
+                DateTime n = DateTime.Now;
+                DateTime dt1970;
+                if (DateTime.TryParse("1/1/1970", out dt1970))
+                {
+                    int secs = (int)(n - dt1970).TotalSeconds;
+                    serialPort2.WriteLine(string.Format("t{0}", secs));
                 }
             }
         }
