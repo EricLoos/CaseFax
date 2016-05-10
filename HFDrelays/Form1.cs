@@ -112,17 +112,18 @@ namespace HFDrelays
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            serialPort2.Open();
+            //serialPort2.Open();
             label6.Text = "";
             player = new WMPLib.WindowsMediaPlayer();
             label1.Text = "";
             RefreshStatus();
-            cbPorts.Items.Clear();
+            cbPorts.Items.Clear(); cbPorts2.Items.Clear();
             string portName;
             foreach (string s in SerialPort.GetPortNames())
             {
                 portName = fixPortName(s);
                 cbPorts.Items.Add(portName);
+                cbPorts2.Items.Add(portName);
             }
             label4.Text = "This is the area for error messages during processing.";
             TimerHours = 0;
@@ -684,6 +685,26 @@ namespace HFDrelays
             }
             r = CorrectCount == 3;
             return r;
+        }
+
+        private void cbPorts2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            serialPort2.Close();
+            try
+            {
+                if (cbPorts2.SelectedItem is string)
+                {
+                    serialPort2.PortName = (string)cbPorts2.SelectedItem;
+                    serialPort2.Open();
+
+                    MessageBox.Show("Serial port has been opened successfully.");
+                    SendTime();
+                }
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+            }
         }
     }
 }

@@ -68,6 +68,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.serialPort2 = new System.IO.Ports.SerialPort(this.components);
+            this.cbPorts2 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -342,16 +343,16 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.Location = new System.Drawing.Point(15, 104);
+            this.label4.Location = new System.Drawing.Point(15, 149);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(357, 61);
+            this.label4.Size = new System.Drawing.Size(357, 36);
             this.label4.TabIndex = 6;
             this.label4.Text = "label4";
             // 
             // btnTemp
             // 
             this.btnTemp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTemp.Location = new System.Drawing.Point(283, 226);
+            this.btnTemp.Location = new System.Drawing.Point(283, 299);
             this.btnTemp.Name = "btnTemp";
             this.btnTemp.Size = new System.Drawing.Size(89, 23);
             this.btnTemp.TabIndex = 7;
@@ -363,7 +364,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(280, 210);
+            this.label5.Location = new System.Drawing.Point(280, 283);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(76, 13);
             this.label5.TabIndex = 8;
@@ -372,7 +373,7 @@
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.Location = new System.Drawing.Point(272, 104);
+            this.label6.Location = new System.Drawing.Point(272, 129);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(100, 15);
             this.label6.TabIndex = 9;
@@ -383,11 +384,23 @@
             // 
             this.serialPort2.PortName = "COM13";
             // 
+            // cbPorts2
+            // 
+            this.cbPorts2.AccessibleName = "cbPorts2";
+            this.cbPorts2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPorts2.FormattingEnabled = true;
+            this.cbPorts2.Location = new System.Drawing.Point(96, 100);
+            this.cbPorts2.Name = "cbPorts2";
+            this.cbPorts2.Size = new System.Drawing.Size(276, 21);
+            this.cbPorts2.TabIndex = 10;
+            this.cbPorts2.SelectedIndexChanged += new System.EventHandler(this.cbPorts2_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 261);
+            this.ClientSize = new System.Drawing.Size(384, 334);
+            this.Controls.Add(this.cbPorts2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnTemp);
@@ -399,7 +412,7 @@
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(400, 300);
+            this.MinimumSize = new System.Drawing.Size(400, 370);
             this.Name = "Form1";
             this.Text = "HFD Alert Relays";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -453,6 +466,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem getSupportCountsToolStripMenuItem;
         private System.IO.Ports.SerialPort serialPort2;
+        private System.Windows.Forms.ComboBox cbPorts2;
     }
 }
 
