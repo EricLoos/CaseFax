@@ -563,17 +563,21 @@ namespace HFDrelays
         }
         WMPLib.WindowsMediaPlayer player;
         string ChimesConst = @"C:\Users\Eric\Downloads\big ben - tower of london{0}.mp3";
+        public bool PlayChimes = false;
         public void PlayMP3(int chimes)
         {
             if (chimes > 12 || chimes < 1)
                 chimes = 1;
             label6.Text = string.Format("Play {0}", chimes);
-            string fn = string.Format(ChimesConst, chimes);
-            if (!System.IO.File.Exists(fn))
-                fn = string.Format(ChimesConst, 1);
-            //player = new WMPLib.WindowsMediaPlayer();
-            player.URL = fn; //  @"C:\Users\Eric\Downloads\big ben - tower of london12b.mp3";
-            player.controls.play();
+            if (PlayChimes)
+            {
+                string fn = string.Format(ChimesConst, chimes);
+                if (!System.IO.File.Exists(fn))
+                    fn = string.Format(ChimesConst, 1);
+                //player = new WMPLib.WindowsMediaPlayer();
+                player.URL = fn; //  @"C:\Users\Eric\Downloads\big ben - tower of london12b.mp3";
+                player.controls.play();
+            }
         }
 
         private void playMP3ToolStripMenuItem_Click(object sender, EventArgs e)
