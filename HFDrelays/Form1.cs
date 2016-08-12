@@ -127,6 +127,8 @@ namespace HFDrelays
             }
             label4.Text = "This is the area for error messages during processing.";
             TimerHours = 0;
+            ExCount = 0;
+            LastExceptionMessage = "";
         }
         public string fixPortName(string s)
         {
@@ -179,6 +181,8 @@ namespace HFDrelays
         int TimerSeconds = 0;
         int TimerCount = 0;
         int TimerHours = 0;
+        int ExCount = 0;
+        string LastExceptionMessage = "";
         bool DoChime = true;
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -218,10 +222,20 @@ namespace HFDrelays
                     {
                         TimerMinutes = 0;
                         TimerCount++;
-                        testing = false;
-                        AlertRefresh();
-                        DoTemp();
-                        DoSupport();
+                        try
+                        {
+                            testing = false;
+                            AlertRefresh();
+                            DoTemp();
+                            DoSupport();
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message == LastExceptionMessage)
+                                ExCount++;
+                            label4.Text = string.Format("{0}({1})",ex.Message, ExCount);
+                            LastExceptionMessage = ex.Message;
+                        }
                         if (TimerCount % 6 == 0) // Hour
                         {
                             if (TimerHours % 4 == 0)
@@ -316,7 +330,7 @@ namespace HFDrelays
             AlertRefresh();
             this.Invalidate();
         }
-        public bool Set1970 = true;
+        public bool Set1970 = false;
         private void SendTime()
         {
             if (Set1970)
@@ -368,7 +382,8 @@ namespace HFDrelays
                     //serialPort1.WriteLine('"' + string.Format("{0:0.00}{1}F", temperatureF, (char)1));
 
                     //serialPort1.WriteLine('"' + pad((int)Math.Round(LastDuration/1000.0),8,string.Format("{0:0}{1}F", temperatureF, (char)1)));
-                    serialPort1.WriteLine('"' + pad((int)Math.Round(h), 8, string.Format("{0:0}{1}F", temperatureF, (char)46)));
+                    //serialPort1.WriteLine('"' + pad((int)Math.Round(h), 8, string.Format("{0:0}{1}F", temperatureF, (char)46)));
+                    serialPort1.WriteLine('"' + pad((int)Math.Round(h), 8, string.Format("{0:0}F", temperatureF)));
                 }
             }
             finally

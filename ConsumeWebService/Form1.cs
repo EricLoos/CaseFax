@@ -225,22 +225,29 @@ namespace ConsumeWebService
             DateTime n = DateTime.Now;
             if (n.Hour <= 20 && n.Hour >= 6)
             {
-            if (tsnOnTimer.Checked)
-            {
-                seconds++;
-                if (seconds >= 60)
+                if (tsnOnTimer.Checked)
                 {
-                    seconds = 0;
-                    minutes++;
-                    if (minutes >= MaxAlertMinutes)
+                    seconds++;
+                    if (seconds >= 60)
                     {
-                        minutes = 0; 
-                        GetAlerts();
-                        //AlertCount++;
-                        ClearSelected();
+                        seconds = 0;
+                        minutes++;
+                        if (minutes >= MaxAlertMinutes)
+                        {
+                            minutes = 0;
+                            try
+                            {
+                                GetAlerts();
+                            }
+                            catch(Exception ex)
+                            {
+                                label1.Text = ex.Message;
+                            }
+                            //AlertCount++;
+                            ClearSelected();
+                        }
                     }
                 }
-            }
             }
             label1.Text = string.Format("{0} -- {1:00}:{2:00}", AlertCount, minutes, seconds);
         }
